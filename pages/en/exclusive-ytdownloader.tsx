@@ -69,7 +69,7 @@ const ExclusiveYTDownloader: NextPage = () => {
 								Minimum screen size : <span className={styles.marked}>1000x800</span>
 							</div>
 							<div className={styles.supportedLan}>
-								Supported languages : <span className={styles.marked}>Enlish , Ukrainian (soon)</span>
+								Supported languages : <span className={styles.marked}>English , Ukrainian (soon)</span>
 							</div>
 							<div className={styles.downloadBtn}>
 								<span>
