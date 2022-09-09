@@ -7,15 +7,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-
+import {useEffect , useState} from "react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { A11y, Navigation, Pagination, Scrollbar } from "swiper";
+import { Navigation, Pagination } from "swiper";
+import axios from "axios";
+import Loader from "../../components/loader";
 
 const ExclusiveYTDownloader: NextPage = () => {
+	const [currentLink,setCurrentLink] = useState<string>(""); 
+	const [loader, setLoader] = useState<string>("");
+	useEffect(() =>{
+		axios.get('/api/link')
+		  .then(function (response) {
+			const {data} = response;
+			setCurrentLink(data.link)
+			setTimeout(()=>{setLoader("none")},1000)
+		  })
+		  .catch(function (error) {
+			console.log(error);
+		  });
+	},[])
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -26,6 +41,7 @@ const ExclusiveYTDownloader: NextPage = () => {
 			</Head>
 
 			<main className={styles.main}>
+			<Loader display ={loader}/>
 				<section className={styles.wrapper_app}>
 					<div className={styles.up_block}>
 						<div className={styles.poster}>
@@ -39,7 +55,7 @@ const ExclusiveYTDownloader: NextPage = () => {
 							<div className={styles.os_app}>
 								ОС: <span className={styles.marked}>Windows 10</span>
 							</div>
-							<div className={styles.dev_app}>
+							<div className={styles.os_app}>
 								Розробник: <span className={styles.marked}>Exclusive_Developer</span>{" "}
 							</div>
 							<div className={styles.release_date_app}>
@@ -51,12 +67,12 @@ const ExclusiveYTDownloader: NextPage = () => {
 							<div className={styles.minScreenSize}>
 								Мінімальний розмір екрану : <span className={styles.marked}>1000x800</span>
 							</div>
-							<div className={styles.minScreenSize}>
+							<div className={styles.supportedLan}>
 								Підтримувані мови : <span className={styles.marked}>Англійська , Українська (скоро)</span>
 							</div>
 							<div className={styles.downloadBtn}>
 								<span>
-									<a className={styles.download_link} href="https://bit.ly/3eC7Obj">
+									<a className={styles.download_link} href={currentLink}>
 										<FontAwesomeIcon icon={faCloudArrowDown} /> Завантажити
 									</a>
 								</span>
@@ -73,9 +89,6 @@ const ExclusiveYTDownloader: NextPage = () => {
 							slidesPerView={1}
 							navigation
 							pagination={{ clickable: true }}
-							
-							onSwiper={(swiper) => console.log(swiper)}
-							onSlideChange={() => console.log("slide change")}
 						>
 							<SwiperSlide className={styles.slideItem}><video src="/exclusive-ytdownloader/preview.mp4" autoPlay muted disablePictureInPicture controls></video></SwiperSlide>
 							<SwiperSlide className={styles.slideItem}><img src="/exclusive-ytdownloader/main_screen_app.jpg" alt="poster_app" /></SwiperSlide>
