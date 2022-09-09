@@ -37,7 +37,7 @@ const Home: NextPage = () => {
 						<div className={styles.content_home}>Exclusive Software</div>
             <div className={styles.socials}>
                 {socials.map((item)=>(
-                  <div><a href={item.link}><FontAwesomeIcon icon={item.icon} fontSize={"40"} key={item.id} /></a></div>
+                  <div key={item.id}><a href={item.link}><FontAwesomeIcon icon={item.icon} fontSize={"40"}  /></a></div>
                 ))}
            
             </div>
